@@ -30,7 +30,7 @@ class Food extends React.Component {
     fetch(`http://Elementads.co/ethlon/api/get-parent-categories`)
       .then(res => {
         res.json().then(data => {
-          // console.log("restaurent data", data);
+          console.log("restaurent data", data);
           this.setState({
             resta: data
           });
@@ -168,6 +168,7 @@ class Food extends React.Component {
                 <View syle={{ flexDirection: "column" }}>
                   <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                     {this.state.resta &&
+                      this.state.resta != "No Data Found" &&
                       this.state.resta.map((data, i) => {
                         return (
                           <View
