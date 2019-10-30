@@ -11,7 +11,7 @@ import {
 import ImageSlider from "../screen/ImageSlider";
 import { connect } from "react-redux";
 import { updateUser } from "../Redux/actions/authActions";
-import { Constants } from "expo";
+import Constants from 'expo-constants';
 
 class Food extends React.Component {
   static navigationOptions = {

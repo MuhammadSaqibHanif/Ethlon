@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet,Image } from 'react-native';
-import { Constants, MapView, Location, Permissions } from 'expo';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
+import Constants from 'expo-constants';
 
 class Maps extends Component {
   state = {

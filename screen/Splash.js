@@ -8,7 +8,7 @@ class Splash extends React.Component {
         source={require("../images/ethlon-splash.jpg")}
         style={{ width: "100%", height: "100%" }}
       >
-        <View
+        {/* <View
           style={{
             flex: 1,
             flexDirection: "row",
@@ -21,7 +21,7 @@ class Splash extends React.Component {
             style={{ width: "90%", height: 100 }}
             resizeMode="stretch"
           />
-        </View>
+        </View> */}
       </ImageBackground>
     );
   }

@@ -106,8 +106,26 @@ class SignIn extends Component {
           >
             <Image
               source={require("../images/ethlon-logo.jpg")}
-              style={{ width: 150, height: 150, marginTop: 20 }}
+              style={{
+                width: 50,
+                height: 50,
+                alignSelf: "center",
+                marginRight: 20
+              }}
             />
+            <Text
+              style={{
+                color: "white",
+                alignSelf: "center",
+                fontSize: 20,
+                fontWeight: "bold"
+              }}
+            >
+              Ethlon Supplies
+            </Text>
+            {/* <Text style={{ color: "white", alignSelf: "center" }}>
+              Supplies
+            </Text> */}
           </View>
           <View style={{ flex: 1.2 }}>
             <KeyboardAvoidingView behavior="padding" enabled>

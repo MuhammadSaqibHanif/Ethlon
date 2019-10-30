@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Header, Body,Input ,Item,Icon,Button,Content } from 'native-base';
 import { StyleSheet, Text, View,Image,ScrollView,TouchableOpacity,Dimensions } from 'react-native';
-import { MapView,Marker } from 'expo';
+import { Marker } from 'expo';
+import MapView from 'react-native-maps';
 import Maps from '../screen/Map'
 class OrderTracking extends React.Component {
     static navigationOptions={
@@ -33,4 +34,4 @@ class OrderTracking extends React.Component {
 </View>
     )}}
 
-    export default OrderTracking;
+export default OrderTracking;

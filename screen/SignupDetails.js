@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Item, Header, Body, Card, Input, CheckBox, Root } from "native-base";
-import { Constants } from "expo";
+import Constants from 'expo-constants';
 
 class SignupDetails extends React.Component {
   static navigationOptions = {

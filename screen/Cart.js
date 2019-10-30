@@ -10,7 +10,7 @@ import {
 import { Card, Header, Body } from "native-base";
 import { connect } from "react-redux";
 import { updateUser } from "../Redux/actions/authActions";
-import { Constants } from "expo";
+import Constants from 'expo-constants';
 
 class Cart extends Component {
   static navigationOptions = {
