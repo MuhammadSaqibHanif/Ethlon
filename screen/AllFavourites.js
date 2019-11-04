@@ -16,7 +16,7 @@ export default class AllFavourites extends React.Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-wishlist/${this.props.navigation.state.params.id}`
+      `http://admin.ethlonsupplies.com/api/get-wishlist/${this.props.navigation.state.params.id}`
     )
       .then(res =>
         res.json().then(data => {

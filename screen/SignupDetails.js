@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Item, Header, Body, Card, Input, CheckBox, Root } from "native-base";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
 class SignupDetails extends React.Component {
   static navigationOptions = {
@@ -146,14 +146,14 @@ class SignupDetails extends React.Component {
     formData.append("store_address", store_address);
     formData.append("country_code", "PK");
 
-    fetch("http://Elementads.co/ethlon/api/post-new-user", {
+    fetch("http://admin.ethlonsupplies.com/api/post-new-user", {
       body: formData,
       method: "POST"
     })
       .then(response => {
         console.log("SignUp response >>>", response);
 
-        if (response._bodyInit == "success") {
+        if (response.status == 200) {
           alert("Register Successfully. Please Login to Continue");
 
           // Toast.show({
@@ -164,9 +164,6 @@ class SignupDetails extends React.Component {
           // });
 
           navigate("SignIn");
-        }
-        if (response._bodyInit == "") {
-          alert("Sign Up Again Please!");
         }
       })
       .catch(error => {

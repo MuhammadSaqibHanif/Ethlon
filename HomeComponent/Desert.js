@@ -30,7 +30,7 @@ class Desert extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://Elementads.co/ethlon/api/get-products-by-category/${2}`)
+    fetch(`http://admin.ethlonsupplies.com/api/get-products-by-category/${2}`)
       .then(res => {
         res.json().then(data => {
           console.log("restaurent data", data);

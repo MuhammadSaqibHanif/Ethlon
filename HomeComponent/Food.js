@@ -27,10 +27,10 @@ class Food extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://Elementads.co/ethlon/api/get-parent-categories`)
+    fetch(`http://admin.ethlonsupplies.com/api/get-parent-categories`)
       .then(res => {
         res.json().then(data => {
-          console.log("restaurent data", data);
+          // console.log("restaurent data", data);
           this.setState({
             resta: data
           });
@@ -43,7 +43,7 @@ class Food extends React.Component {
 
   search() {
     fetch(
-      `http://Elementads.co/ethlon/api/search-products?name=${this.state.search}`
+      `http://admin.ethlonsupplies.com/api/search-products?name=${this.state.search}`
     )
       .then(res => {
         res.json().then(data => {

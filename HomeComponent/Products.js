@@ -11,7 +11,7 @@ import {
 import ImageSlider from "../screen/ImageSlider";
 import { connect } from "react-redux";
 import { updateUser } from "../Redux/actions/authActions";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
 class Food extends React.Component {
   static navigationOptions = {
@@ -33,7 +33,7 @@ class Food extends React.Component {
     // console.log("THE PRODUCT ID", this.props.navigation.state.params.PID);
 
     fetch(
-      `http://Elementads.co/ethlon/api/get-products-by-category/${this.props.navigation.state.params.PID}`
+      `http://admin.ethlonsupplies.com/api/get-products-by-category/${this.props.navigation.state.params.PID}`
     )
       .then(res => {
         res.json().then(data => {
@@ -51,7 +51,7 @@ class Food extends React.Component {
 
   search() {
     fetch(
-      `http://Elementads.co/ethlon/api/search-products?name=${this.state.search}`
+      `http://admin.ethlonsupplies.com/api/search-products?name=${this.state.search}`
     )
       .then(res => {
         res.json().then(data => {
@@ -79,7 +79,7 @@ class Food extends React.Component {
         form.append("user_id", UserID);
         form.append("product_id", pid);
 
-        fetch("http://Elementads.co/ethlon/api/post-add-to-wishlist", {
+        fetch("http://admin.ethlonsupplies.com/api/post-add-to-wishlist", {
           method: "POST",
           headers: {
             "Content-Type": "multipart/form-data"

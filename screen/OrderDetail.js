@@ -35,7 +35,7 @@ class OrderDetail extends React.Component {
   }
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get/order-details/${
+      `http://admin.ethlonsupplies.com/api/get/order-details/${
         this.state.order_no
       }`
     )

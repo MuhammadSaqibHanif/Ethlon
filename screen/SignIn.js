@@ -42,7 +42,7 @@ class SignIn extends Component {
     formData.append("email", email);
     formData.append("password", password);
 
-    fetch(`http://Elementads.co/ethlon/api/post-user-credentials`, {
+    fetch(`http://admin.ethlonsupplies.com/api/post-user-credentials`, {
       body: formData,
       method: "post"
     })
@@ -105,7 +105,7 @@ class SignIn extends Component {
             }}
           >
             <Image
-              source={require("../images/ethlon-logo.jpg")}
+              source={require("../images/ethlon-logo.png")}
               style={{
                 width: 50,
                 height: 50,
@@ -115,9 +115,9 @@ class SignIn extends Component {
             />
             <Text
               style={{
-                color: "white",
+                color: "#D11E46",
                 alignSelf: "center",
-                fontSize: 20,
+                fontSize: 32,
                 fontWeight: "bold"
               }}
             >

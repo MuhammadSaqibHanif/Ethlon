@@ -14,7 +14,7 @@ class RemainingBalance extends React.Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-payment/${this.props.navigation.state.params.id}`
+      `http://admin.ethlonsupplies.com/api/get-payment/${this.props.navigation.state.params.id}`
     )
       .then(res => {
         res.json().then(data => {
@@ -22,7 +22,7 @@ class RemainingBalance extends React.Component {
           this.setState({ remaining_data: data });
 
           fetch(
-            `http://Elementads.co/ethlon/api/get-payment-details/${this.props.navigation.state.params.id}`
+            `http://admin.ethlonsupplies.com/api/get-payment-details/${this.props.navigation.state.params.id}`
           )
             .then(resp => {
               resp.json().then(details => {
@@ -51,19 +51,44 @@ class RemainingBalance extends React.Component {
               marginTop: 20
             }}
           >
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "500" }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                fontWeight: "500",
+                width: "40%"
+              }}
+            >
               Name
             </Text>
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "500" }}>
-              Email Address
-            </Text>
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "500" }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                fontWeight: "500",
+                width: "20%"
+              }}
+            >
               Total
             </Text>
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "500" }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                fontWeight: "500",
+                width: "20%"
+              }}
+            >
               Payed
             </Text>
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "500" }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                fontWeight: "500",
+                width: "20%"
+              }}
+            >
               Balance
             </Text>
           </View>
@@ -72,11 +97,14 @@ class RemainingBalance extends React.Component {
             this.state.remaining_data != "No Data Found" &&
             this.state.remaining_data.map((item, i) => {
               return (
-                <View key={i} style={{ flexDirection: "column" }}>
+                <View
+                  key={i}
+                  style={{ flexDirection: "column", width: "100%" }}
+                >
                   <View
                     style={{
                       flexDirection: "row",
-                      width: "95%",
+                      width: "100%",
                       justifyContent: "space-between",
                       alignItems: "center",
                       backgroundColor: "white",
@@ -89,25 +117,20 @@ class RemainingBalance extends React.Component {
                       style={{
                         color: "black",
                         fontSize: 12,
-                        fontWeight: "500"
+                        fontWeight: "500",
+                        width: "40%"
                       }}
                     >
                       {item.customer_name}
                     </Text>
+
                     <Text
                       style={{
                         color: "black",
                         fontSize: 12,
-                        fontWeight: "500"
-                      }}
-                    >
-                      {item.customer_email}
-                    </Text>
-                    <Text
-                      style={{
-                        color: "black",
-                        fontSize: 12,
-                        fontWeight: "500"
+                        fontWeight: "500",
+                        width: "20%",
+                        textAlign: "center"
                       }}
                     >
                       {item.total_payment}
@@ -116,7 +139,9 @@ class RemainingBalance extends React.Component {
                       style={{
                         color: "black",
                         fontSize: 12,
-                        fontWeight: "500"
+                        fontWeight: "500",
+                        width: "20%",
+                        textAlign: "center"
                       }}
                     >
                       {item.payed_amount}
@@ -125,7 +150,9 @@ class RemainingBalance extends React.Component {
                       style={{
                         color: "black",
                         fontSize: 12,
-                        fontWeight: "500"
+                        fontWeight: "500",
+                        width: "20%",
+                        textAlign: "center"
                       }}
                     >
                       {item.remaining_amount}

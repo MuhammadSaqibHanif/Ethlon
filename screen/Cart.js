@@ -10,7 +10,7 @@ import {
 import { Card, Header, Body } from "native-base";
 import { connect } from "react-redux";
 import { updateUser } from "../Redux/actions/authActions";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
 class Cart extends Component {
   static navigationOptions = {
@@ -44,12 +44,9 @@ class Cart extends Component {
     this.setState({
       runRender: true
     });
-
-    // this._toggleModal();
   }
 
   checkOut = () => {
-    console.log(this.props.user.CartData);
     let deviceSerial = null;
     try {
       deviceSerial = Constants.deviceId;
@@ -59,33 +56,21 @@ class Cart extends Component {
     }
 
     let buyer_id = this.props.navigation.state.params.id.response;
-    console.log("buyer_id", buyer_id);
-
     let products = [];
     let total = 0;
-    Object.values(this.props.user.CartData).map((value, index) => {
+
+    Object.values(this.props.user.CartData).map(value => {
       products.push({
         product_id: value.id,
         quantity: value.count,
-        product_amount:
-          // Number(value.sale_price) > 0
-          //   ? value.sale_price
-          //   : value.cost_price
-          //   ? Number(value.sale_price) > 0
-          //     ? value.sale_price
-          //     : value.cost_price
-          //   : 0,
-          value.regural_price ? value.regural_price : 0,
+        product_amount: value.regural_price ? value.regural_price : 0,
         type: 1
       });
     });
-    console.log(products);
 
     products.forEach(product => {
       total += product.quantity * product.product_amount;
     });
-
-    console.log("TOTAL AMOUNT", total);
 
     let req_body = JSON.stringify({
       ip_address: deviceSerial.toString(),
@@ -94,83 +79,87 @@ class Cart extends Component {
       products
     });
 
-    console.log(">>>>>>>", req_body);
+    // console.log(">>>>>>>", req_body);
 
-    fetch(`http://Elementads.co/ethlon/api/post-cart-data`, {
+    fetch(`http://admin.ethlonsupplies.com/api/post-cart-data`, {
       method: "POST",
       header: {
         "Content-Type": "application/json"
       },
       body: req_body
     })
-      // .then(res => res.json())
+      .then(res => res.formData())
       .then(response => {
-        // console.log("CHECKOUT RESPONSE", response._bodyInit);
-        // console.log("CHECKOUT RESPONSE", response, "CHECKOUT RESPONSE");
-        if (response._bodyInit) {
+        // console.log(response, "post-cart-data >>>");
+
+        if (response._parts && response._parts[0] && response._parts[0][0]) {
+          // console.log("response._parts[0][0] >>>", response._parts[0][0]);
+
           let form = new FormData();
-          form.append("order_no", response._bodyInit);
+          form.append("order_no", response._parts[0][0]);
 
-          // let OrderNo = response._bodyInit;
-          // console.log(OrderNo, typeof parsedOrderNo);
-
-          fetch(`http://Elementads.co/ethlon/api/post-payment-by-app`, {
+          fetch(`http://admin.ethlonsupplies.com/api/post-payment-by-app`, {
             method: "POST",
             header: {
               "Content-Type": "multipart/form-data"
             },
             body: form
-          }).then(res => {
-            console.log("2ND RES", res);
-            if (res._bodyInit === '"success"') {
-              this.props.updateUser({
-                CartData: {}
-              });
-              fetch(
-                `http://Elementads.co/ethlon/api/get-user-profile/${this.props.navigation.state.params.id}`
-              )
-                .then(res => {
-                  res.json().then(data => {
-                    console.log(data);
-                    let contact = data[0].contact_no.split(" ");
-                    console.log("SPLITTED CONTACT", contact);
-                    fetch(
-                      `http://csms.dotklick.com/api_sms/api.php?key=096c4f6c43a663002db224eec67b426f&receiver=${data[0].contact_no}&sender=ETHLON&msgdata=Thankyou for shopping with EthlonSupplies`
-                    )
-                      .then(res => {
-                        res.json().then(otp_response => {
-                          console.log("OTP RESPONSE", otp_response);
-                          if (otp_response.response.status === "Success") {
-                            alert("Checkout Successfully!");
-                          } else {
-                            alert("Checkout again please!");
-                            this.setState({
-                              checkoutData: {
-                                total: 0
-                              }
-                            });
-                          }
-                        });
-                      })
-                      .catch(err => {
-                        console.log("OTP SENDING ERROR IN CART.JS", err);
-                      });
-                  });
-                })
-                .catch(err => {
-                  console.log("USER PROFILE FETCH ERROR IN CART.JS", err);
+          })
+            .then(res => res.formData())
+            .then(respo => {
+              // console.log("post-payment-by-app >>>", respo);
+
+              if (
+                respo._parts &&
+                respo._parts[0] &&
+                respo._parts[0][0] == '"success"'
+              ) {
+                // console.log("respo._parts[0][0] >>>", respo._parts[0][0]);
+
+                this.props.updateUser({
+                  CartData: {}
                 });
-            }
-          });
+
+                alert("Checkout Successfully!");
+
+                fetch(
+                  `http://admin.ethlonsupplies.com/api/get-user-profile/${buyer_id}`
+                )
+                  .then(res => {
+                    res.json().then(data => {
+                      // console.log("get-user-profile >>>", data);
+
+                      fetch(
+                        `http://csms.dotklick.com/api_sms/api.php?key=096c4f6c43a663002db224eec67b426f&receiver=${data[0].contact_no}&sender=ETHLON&msgdata=Thankyou for shopping with EthlonSupplies`
+                      )
+                        .then(res => {
+                          res.json().then(otp_response => {
+                            console.log("OTP RESPONSE >>>", otp_response);
+
+                            if (otp_response.response.status === "Success") {
+                              alert("Checkout Successfully!");
+                            } else {
+                              alert("Checkout again please!");
+
+                              this.setState({
+                                checkoutData: {
+                                  total: 0
+                                }
+                              });
+                            }
+                          });
+                        })
+                        .catch(err => {
+                          console.log("OTP SENDING ERROR IN CART.JS", err);
+                        });
+                    });
+                  })
+                  .catch(err => {
+                    console.log("USER PROFILE FETCH ERROR IN CART.JS", err);
+                  });
+              }
+            });
         }
-        // if (response._bodyInit != "success") {
-        //   alert("Checkout again please");
-        //   this.setState({
-        //     checkoutData: {
-        //       total: 0
-        //     }
-        //   });
-        // }
       })
       .catch(() => {
         this.setState({
@@ -184,7 +173,8 @@ class Cart extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    // console.log(this.props, "check out data");
+
+    // console.log("this.props.navigation.state.params.id >>>", this.props.navigation.state.params.id);
 
     this.props.user &&
       this.props.user.CartData &&

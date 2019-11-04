@@ -35,7 +35,7 @@ class AddCart extends Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-product-details/${
+      `http://admin.ethlonsupplies.com/api/get-product-details/${
         this.state.id
       }`
     )

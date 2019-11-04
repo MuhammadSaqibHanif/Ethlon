@@ -33,7 +33,7 @@ class ProductRequest extends React.Component {
     let form = new FormData();
     form.append("enquiry", enquiry);
 
-    fetch(`http://Elementads.co/ethlon/api/post-product-enquiry`, {
+    fetch(`http://admin.ethlonsupplies.com/api/post-product-enquiry`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -48,7 +48,7 @@ class OrderPage extends React.Component {
     //     console.log("Fetch Student Homwork",err)
     // })
     fetch(
-      `http://Elementads.co/ethlon/api/get/products-by-category/${
+      `http://admin.ethlonsupplies.com/api/get/products-by-category/${
         this.state.pro_cat_id
       }`
     )

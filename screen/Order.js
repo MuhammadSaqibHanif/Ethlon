@@ -24,7 +24,7 @@ class Order extends React.Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-orders/${this.props.navigation.state.params.id}`
+      `http://admin.ethlonsupplies.com/api/get-orders/${this.props.navigation.state.params.id}`
     )
       .then(res => {
         res.json().then(data => {
@@ -42,7 +42,7 @@ class Order extends React.Component {
 
   get_Order_Detail = (order_ID, index, clickStatus) => {
     console.log("ORDER ID PASSED TO FETCH ", order_ID);
-    fetch(`http://Elementads.co/ethlon/api/get-order-details/${order_ID}`)
+    fetch(`http://admin.ethlonsupplies.com/api/get-order-details/${order_ID}`)
       .then(res => {
         res.json().then(data => {
           console.log("RESPONSE ORDER DETAILS", data);

@@ -16,7 +16,7 @@ class Slider extends Component {
   };
 
   componentWillMount() {
-    fetch("http://Elementads.co/ethlon/api/get-banners")
+    fetch("http://admin.ethlonsupplies.com/api/get-banners")
       .then(res => res.json())
       .then(response => {
         // console.log("BANNER IMAGES", response);

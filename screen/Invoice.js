@@ -3,6 +3,10 @@ import { View, Text, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 class Invoice extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
+
   constructor() {
     super();
     this.state = {
@@ -12,25 +16,21 @@ class Invoice extends React.Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-orders-invoices/${
-        this.props.navigation.state.params.id
-      }`
+      `http://admin.ethlonsupplies.com/api/get-orders-invoices/${this.props.navigation.state.params.id}`
     )
       .then(res => {
         res.json().then(data => {
-          console.log("RESPONSE INVOICES", data);
+          // console.log("get-orders-invoices", data);
 
           this.setState({ invoices: data });
         });
       })
       .catch(err => {
         this.setState({ invoices: [] });
+
+        console.log("get-orders-invoices err", err);
       });
   }
-
-  static navigationOptions = {
-    header: null
-  };
 
   render() {
     return (
@@ -57,9 +57,9 @@ class Invoice extends React.Component {
             </View>
           )}
           {this.state.invoices &&
-            this.state.invoices.map(item => {
+            this.state.invoices.map((item, index) => {
               return (
-                <View>
+                <View key={index}>
                   <View
                     style={{
                       width: "100%",
@@ -97,56 +97,6 @@ class Invoice extends React.Component {
                       <Text>Date: {item.ordered_date}</Text>
                     </View>
                   </View>
-
-                  {/* <View
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#D11D46",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                  }}
-                >
-                  <Text style={{ color: "white" }}>item</Text>
-
-                  <View
-                    style={{
-                      width: "30%",
-                      backgroundColor: "#D11D46",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>Cost</Text>
-                    <Text style={{ color: "white" }}>Qty</Text>
-                    <Text style={{ color: "white" }}>Total</Text>
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    width: "100%",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                  }}
-                >
-                  <Text>MilkPack</Text>
-
-                  <View
-                    style={{
-                      width: "30%",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <Text>200</Text>
-                    <Text>2</Text>
-                    <Text>400</Text>
-                  </View>
-                </View> */}
                 </View>
               );
             })}

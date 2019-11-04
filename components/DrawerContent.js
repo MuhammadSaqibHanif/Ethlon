@@ -21,7 +21,7 @@ class DrawerContent extends React.Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-user-profile/${this.state.user_id}`
+      `http://admin.ethlonsupplies.com/api/get-user-profile/${this.state.user_id}`
     )
       .then(res => {
         res.json().then(data => {

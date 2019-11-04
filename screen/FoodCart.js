@@ -46,7 +46,7 @@ class FoodCart extends Component {
 
   componentDidMount() {
     fetch(
-      `http://Elementads.co/ethlon/api/get-product-details/${this.props.navigation.state.params.id}`
+      `http://admin.ethlonsupplies.com/api/get-product-details/${this.props.navigation.state.params.id}`
     )
       .then(res => {
         res.json().then(data => {
