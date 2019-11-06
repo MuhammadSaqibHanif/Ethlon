@@ -20,7 +20,7 @@ class Invoice extends React.Component {
     )
       .then(res => {
         res.json().then(data => {
-          // console.log("get-orders-invoices", data);
+          // console.log("get-orders-invoices >>>", data);
 
           this.setState({ invoices: data });
         });

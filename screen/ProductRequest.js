@@ -26,27 +26,36 @@ import {
 class ProductRequest extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      message: ""
+    };
   }
 
-  send_Enquiry = enquiry => {
+  send_Enquiry = () => {
     let form = new FormData();
-    form.append("enquiry", enquiry);
+    form.append("enquiry", this.state.message);
+    form.append("user_id", this.props.navigation.state.params.id);
 
     fetch(`http://admin.ethlonsupplies.com/api/post-product-enquiry`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
       body: form
     })
       .then(res => {
-        res.json().then(data => {
-          console.log("REMAINING DATA", data);
-          this.setState({ remaining_data: data });
+        res.formData().then(respo => {
+          console.log("post-product-enquiry >>>", respo);
+
+          if (
+            respo._parts &&
+            respo._parts[0] &&
+            respo._parts[0][0] == "success"
+          ) {
+            alert("Request send successfully");
+
+            this.setState({ message: "" });
+          }
         });
       })
-      .catch(err => console.log("NO REMAINING DATA ERROR", err));
+      .catch(err => console.log("post-product-enquiry ERROR", err));
   };
 
   static navigationOptions = {
@@ -71,7 +80,15 @@ class ProductRequest extends React.Component {
         >
           <Card>
             <View style={{ width: "100%", height: "50%" }}>
-              <Input placeholder="YOUR ENQUIRY HERE ...." />
+              <Input
+                value={this.state.message}
+                onChangeText={message =>
+                  this.setState({
+                    message
+                  })
+                }
+                placeholder="YOUR ENQUIRY HERE ...."
+              />
             </View>
             <View
               style={{
@@ -82,7 +99,7 @@ class ProductRequest extends React.Component {
             >
               <TouchableOpacity
                 onPress={() => {
-                  alert("Request send successfully");
+                  this.send_Enquiry();
                 }}
               >
                 <Text style={{ padding: 20 }}>SUBMIT</Text>

@@ -8,7 +8,16 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import { Item, Header, Body, Card, Input, CheckBox, Root } from "native-base";
+import {
+  Item,
+  Header,
+  Body,
+  Card,
+  Input,
+  CheckBox,
+  Root,
+  Toast
+} from "native-base";
 import Constants from "expo-constants";
 
 class SignupDetails extends React.Component {
@@ -23,15 +32,20 @@ class SignupDetails extends React.Component {
       lastName: "",
       email: "",
       password: "",
-      restaurant_address: "",
-      country_phone_code: "+92",
-      phone: "",
-      country_id: "PK",
-      city_id: 66015,
-      owner_name: "",
+      repassword: "",
+      checked: false,
       store_name: "",
       store_address: "",
-      checked: false,
+      owner_name: "",
+      city: "",
+      country_phone_code: "+92",
+      phone: "",
+      b_owner_name: "",
+      b_restaurant_name: "",
+      b_restaurant_address: "",
+      b_address_optional: "",
+      country_id: "PK",
+      city_id: 66015,
       checked_For_Second_Screen: false
     };
   }
@@ -42,39 +56,27 @@ class SignupDetails extends React.Component {
       lastName,
       email,
       password,
-      restaurant_address,
-      country_phone_code,
-      phone,
-      country_id,
-      city_id,
-      owner_name,
-      store_name,
-      store_address
+      repassword,
+      checked
     } = this.state;
 
-    // if (
-    //   (firstName,
-    //   lastName,
-    //   email,
-    //   password,
-    //   restaurant_address,
-    //   country_phone_code,
-    //   phone,
-    //   country_id,
-    //   city_id,
-    //   owner_name,
-    //   store_name,
-    //   store_address)
-    // ) {
-    //   Toast.show({
-    //     text: "please fill all requirements first to proceed further",
-    //     position: "bottom",
-    //     duration: 5000,
-    //     type: "danger"
-    //   });
-    // } else {
-    this.setState({ checked_For_Second_Screen: true });
-    // }
+    if (
+      firstName == "" ||
+      lastName == "" ||
+      email == "" ||
+      password == "" ||
+      repassword == "" ||
+      checked == false
+    ) {
+      Toast.show({
+        text: "please fill all requirements first to proceed further",
+        position: "top",
+        duration: 3000,
+        type: "danger"
+      });
+    } else {
+      this.setState({ checked_For_Second_Screen: true });
+    }
   };
 
   signUp = () => {
@@ -85,92 +87,113 @@ class SignupDetails extends React.Component {
       lastName,
       email,
       password,
-      restaurant_address,
       country_phone_code,
       phone,
       country_id,
       city_id,
       owner_name,
       store_name,
-      store_address
+      store_address,
+      city,
+      b_owner_name,
+      b_restaurant_name,
+      b_restaurant_address
     } = this.state;
 
-    // console.log(
-    //   "firstName >>>",
-    //   firstName,
-    //   "lastName >>>",
-    //   lastName,
-    //   "email >>>",
-    //   email,
-    //   "password >>>",
-    //   password,
-    //   "restaurant_address >>>",
-    //   restaurant_address,
-    //   "country_phone_code >>>",
-    //   country_phone_code,
-    //   "phone >>>",
-    //   phone,
-    //   "country_id >>>",
-    //   country_id,
-    //   "city_id >>>",
-    //   city_id,
-    //   "owner_name >>>",
-    //   owner_name,
-    //   "store_name >>>",
-    //   store_name,
-    //   "store_address >>>",
-    //   store_address
-    // );
-
-    let deviceSerial = null;
-    try {
-      deviceSerial = Constants.deviceId;
-      console.log("DEVICE ID FOUND: " + deviceSerial);
-    } catch (e) {
-      console.log("error reading device ID");
-    }
-
-    let formData = new FormData();
-    formData.append("ip_address", deviceSerial);
-    formData.append("first_name", firstName);
-    formData.append("last_name", lastName);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("address", restaurant_address);
-    formData.append("country_phone_code", country_phone_code);
-    formData.append("cell_number", phone);
-    formData.append("country_id", country_id);
-    formData.append("city_id", city_id);
-    formData.append("owner_name", owner_name);
-    formData.append("store_name", store_name);
-    formData.append("store_address", store_address);
-    formData.append("country_code", "PK");
-
-    fetch("http://admin.ethlonsupplies.com/api/post-new-user", {
-      body: formData,
-      method: "POST"
-    })
-      .then(response => {
-        console.log("SignUp response >>>", response);
-
-        if (response.status == 200) {
-          alert("Register Successfully. Please Login to Continue");
-
-          // Toast.show({
-          //   text: "Register Successfully. Please Login to Continue",
-          //   position: "top",
-          //   duration: 5000,
-          //   type: "success"
-          // });
-
-          navigate("SignIn");
-        }
-      })
-      .catch(error => {
-        console.log("SIGNUP ERROR", error);
-
-        alert("ERROR! Sign Up Again Please!");
+    if (
+      store_name == "" ||
+      store_address == "" ||
+      owner_name == "" ||
+      city == "" ||
+      phone == "" ||
+      b_owner_name == "" ||
+      b_restaurant_name == "" ||
+      b_restaurant_address == ""
+    ) {
+      Toast.show({
+        text: "please fill all requirements first to proceed further",
+        position: "top",
+        duration: 3000,
+        type: "danger"
       });
+    } else {
+      // console.log(
+      //   "firstName >>>",
+      //   firstName,
+      //   "lastName >>>",
+      //   lastName,
+      //   "email >>>",
+      //   email,
+      //   "password >>>",
+      //   password,
+      //   "restaurant_address >>>",
+      //   restaurant_address,
+      //   "country_phone_code >>>",
+      //   country_phone_code,
+      //   "phone >>>",
+      //   phone,
+      //   "country_id >>>",
+      //   country_id,
+      //   "city_id >>>",
+      //   city_id,
+      //   "owner_name >>>",
+      //   owner_name,
+      //   "store_name >>>",
+      //   store_name,
+      //   "store_address >>>",
+      //   store_address
+      // );
+
+      let deviceSerial = null;
+      try {
+        deviceSerial = Constants.deviceId;
+        console.log("DEVICE ID FOUND: " + deviceSerial);
+      } catch (e) {
+        console.log("error reading device ID");
+      }
+
+      let formData = new FormData();
+      formData.append("ip_address", deviceSerial);
+      formData.append("first_name", firstName);
+      formData.append("last_name", lastName);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("address", b_restaurant_address);
+      formData.append("country_phone_code", country_phone_code);
+      formData.append("cell_number", phone);
+      formData.append("country_id", country_id);
+      formData.append("city_id", city_id);
+      formData.append("owner_name", owner_name);
+      formData.append("store_name", store_name);
+      formData.append("store_address", store_address);
+      formData.append("country_code", "PK");
+
+      fetch("http://admin.ethlonsupplies.com/api/post-new-user", {
+        body: formData,
+        method: "POST"
+      })
+        .then(response => {
+          console.log("SignUp response >>>", response);
+
+          if (response.status == 200) {
+            alert("Register Successfully. Please Login to Continue");
+
+            // Toast.show({
+            //   text: "Register Successfully. Please Login to Continue",
+            //   position: "top",
+            //   duration: 5000,
+            //   type: "success"
+            // });
+
+            navigate("SignIn");
+          }
+        })
+        .catch(error => {
+          console.log("SIGNUP ERROR", error);
+
+          alert("ERROR! Sign Up Again Please!");
+        });
+    }
   };
 
   render() {
@@ -189,10 +212,14 @@ class SignupDetails extends React.Component {
                     alignItems: "center"
                   }}
                 >
-                  <Image
-                    source={require("../images/ic_back.png")}
-                    style={{ width: 25, height: 25 }}
-                  />
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.goBack()}
+                  >
+                    <Image
+                      source={require("../images/ic_back.png")}
+                      style={{ width: 25, height: 25 }}
+                    />
+                  </TouchableOpacity>
                   <Text
                     style={{ color: "white", marginLeft: 15, fontSize: 20 }}
                   >
@@ -478,7 +505,11 @@ class SignupDetails extends React.Component {
                         marginTop: 10
                       }}
                     >
-                      <Input placeholder="KARACHI" />
+                      <Input
+                        placeholder="Enter City"
+                        value={this.state.city}
+                        onChangeText={city => this.setState({ city })}
+                      />
                     </View>
 
                     <View
@@ -514,9 +545,10 @@ class SignupDetails extends React.Component {
                       >
                         <Input
                           placeholder="Phone Number"
+                          keyboardType="phone-pad"
                           value={this.state.phone}
                           onChangeText={phone => this.setState({ phone })}
-                          placeholder="First Name"
+                          placeholder="Enter Number"
                         />
                       </View>
                     </View>
@@ -553,8 +585,10 @@ class SignupDetails extends React.Component {
                       }}
                     >
                       <Input
-                        // value={this.state.owner_name}
-                        // onChangeText={owner_name => this.setState({ owner_name })}
+                        value={this.state.b_owner_name}
+                        onChangeText={b_owner_name =>
+                          this.setState({ b_owner_name })
+                        }
                         placeholder="Owner's Name"
                       />
                     </View>
@@ -569,10 +603,10 @@ class SignupDetails extends React.Component {
                       }}
                     >
                       <Input
-                        // value={this.state.restaurant_address}
-                        // onChangeText={restaurant_address =>
-                        //   this.setState({ restaurant_address })
-                        // }
+                        value={this.state.b_restaurant_name}
+                        onChangeText={b_restaurant_name =>
+                          this.setState({ b_restaurant_name })
+                        }
                         placeholder="Resturant Name"
                       />
                     </View>
@@ -587,9 +621,9 @@ class SignupDetails extends React.Component {
                       }}
                     >
                       <Input
-                        value={this.state.restaurant_address}
-                        onChangeText={restaurant_address =>
-                          this.setState({ restaurant_address })
+                        value={this.state.b_restaurant_address}
+                        onChangeText={b_restaurant_address =>
+                          this.setState({ b_restaurant_address })
                         }
                         placeholder="Resturant Address"
                       />
@@ -604,7 +638,13 @@ class SignupDetails extends React.Component {
                         marginTop: 10
                       }}
                     >
-                      <Input placeholder="Branch Address(Optional)" />
+                      <Input
+                        value={this.state.b_address_optional}
+                        onChangeText={b_address_optional =>
+                          this.setState({ b_address_optional })
+                        }
+                        placeholder="Branch Address(Optional)"
+                      />
                     </View>
 
                     <View

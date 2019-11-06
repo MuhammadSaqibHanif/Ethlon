@@ -132,7 +132,7 @@ class DrawerContent extends React.Component {
           )}
 
           {this.renderRow(
-            () => navigate("ProductRequest"),
+            () => navigate("ProductRequest", { id: this.state.user_id }),
             require("../images/interview.png"),
             "Product Request"
           )}

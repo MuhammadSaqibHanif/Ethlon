@@ -66,7 +66,7 @@ class SignIn extends Component {
           });
         } else {
           Toast.show({
-            text: "Please Sign Up to continue OR some ERROR Happens",
+            text: "Email Or Password is incorrect!",
             position: "top",
             duration: 5000,
             type: "danger"
@@ -75,7 +75,7 @@ class SignIn extends Component {
       })
       .catch(error => {
         Toast.show({
-          text: "Network Error",
+          text: "Email Or Password is incorrect!",
           position: "top",
           duration: 5000,
           type: "danger"
